@@ -10,7 +10,7 @@ services:
       - 9000:9000
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
-#      - hadoop_home:/home
+      - $PWD/hadoop_home:/home
     environment:
       - CLUSTER_NAME=test
     env_file:
@@ -53,6 +53,8 @@ services:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
     container_name: resourcemanager
     restart: always
+    ports:
+      - 8088:8088
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
     env_file:
@@ -79,6 +81,7 @@ services:
       - ./hadoop.env
   
 volumes:
+  hadoop_home:
   hadoop_namenode:
   hadoop_datanode1:
   hadoop_datanode2:
